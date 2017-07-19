@@ -105,4 +105,20 @@ class BodyTest extends \PHPUnit_Framework_TestCase {
 		// when
 		$found = $body->bind('Fliglio\Web\Foo');
 	}
+
+	public function testReconstuctEntity() {
+
+		// given
+		$expected = new Foo("foo");
+		$fooJson = '{"myProp": "foo"}';
+
+		$body = new Entity($fooJson, 'application/json');
+
+		// when
+		$newEntity = new Entity($body->get(), $body->getContentType());
+		$found = $body->bind('Fliglio\Web\Foo');
+
+		// then
+		$this->assertEquals($expected, $found);
+	}
 }
